@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="Audio Visualizer">
+        <title>Audio Visualizer</title>
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <link type="text/css" rel="stylesheet" href="css/index.css">
+    </head>
+    <body background="img/hobbes.jpg">  
+        <header id = "info">
+            Fun-thesizer
+        </header>
+        <div id="wrapper">
+            <div id="fileWrapper" class="file_wrapper">
+                <label for="uploadedFile">Select an MP3 file to play:</label>
+                <input type="file" id="uploadedFile"></input>
+            </div>
+            <div id="update_status">
+            <label for="effects">Select an effect:</label>
+            <select id = "effects" onChange="pickEffect.call(this, event)" ;>
+                <option>No effect</option>
+                <option>Chorus</option>
+                <option>Tremolo</option>
+                <option>Ping-pong</option>
+                <option>Phaser</option>
+            </select>
+            </div>
+        </div>
+        <div id="visualizer_wrapper">
+            <canvas id='canvas' width="1200" height="400"></canvas>
+        </div>
+        <div class="container">
+            <div id="keyboard"></div>
+        </div>
+        <script type="text/javascript" src="js/visualizer.js"></script>
+        <script type="text/javascript" src="js/synth.js"></script>
+        <script type="text/javascript" src="js/tuna-min.js"></script>
+    </body>
+</html>
