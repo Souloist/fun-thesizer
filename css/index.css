@@ -59,3 +59,9 @@ input[type="file"]
     font-size: 14px;
 	margin: 0 auto;
 }
+
+#stop{
+	margin-top: 5px;
+    height: 25px;
+	width: 48px;
+}
