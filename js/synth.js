@@ -10,22 +10,26 @@
 }},offset:{get:function(){return this._offset},set:function(a){this._offset=a}},oscillation:{get:function(){return this._oscillation},set:function(a){this._oscillation=a}},phase:{get:function(){return this._phase},set:function(a){this._phase=a}},target:{get:function(){return this._target},set:function(a){this._target=a}},activate:{value:function(a){a?this.output.connect(j.destination):this.output.disconnect(j.destination)}},callback:{value:function(a){var b=this;return function(){b._phase+=b._phaseInc,b._phase>2*Math.PI&&(b._phase=0),a(b._target,b._offset+b._oscillation*Math.sin(b._phase))}}}}),c.toString=c.prototype.toString=function(){return"Please visit https://github.com/Theodeus/tuna/wiki for instructions on how to use Tuna.js"}}(this);
 
 
-//---------------------
-
+//--------------------------
+// synth.js starts here
 
 var keyboard = new QwertyHancock({
      id: 'keyboard',
      width: 500,
-     height: 110,
-     octaves: 2,
-     startNote: 'C3'
+     height: 150,
+     octaves: 2
 });
 
 var context = new AudioContext(),
     masterVolume = context.createGain(),
-    analyser = context.createAnalyser(),
     tuna = new Tuna(context),
     oscillators = {};
+
+
+masterVolume.gain.value = 0.3;
+
+var duration = 1;
+
 
 // Objects (effects) created with the tuna library
 var chorus = new tuna.Chorus({
@@ -58,109 +62,152 @@ var phaser = new tuna.Phaser({
     bypass: 0
 });
 
-
-masterVolume.gain.value = 0.3;
-
-var duration = 1;
+// ------------
 
 
-
-// This ensures that the default keyboard always plays
-keyboard.keyDown = function(note, frequency) {
-    var osc = context.createOscillator(),
-      osc2 = context.createOscillator();
-
-    osc.frequency.value = frequency;
-    osc.type = 'sawtooth';
-    osc.detune.value = -10;
-
-    osc2.frequency.value = frequency;
-    osc2.type = 'triangle';
-    osc2.detune.value = 10;
-
-    osc.connect(masterVolume);
-    osc2.connect(masterVolume);
-    
-    masterVolume.connect(analyser);
-    analyser.connect(context.destination);
-    oscillators[frequency] = [osc, osc2];
-    osc.start(context.currentTime);
-    osc2.start(context.currentTime);
-	Visualize(analyser);
-
-};
-
-keyboard.keyUp = function(note, frequency) {
-    oscillators[frequency].forEach(function(oscillator) {
-      oscillator.stop(context.currentTime);
-    });
-  };  
-// This ensures that the default keyboard always plays
-
-// This is the function that is called when the user picks an effect
-function pickEffect(event) {
-  var effect = this.options[this.selectedIndex].text;
+function pickOsc(event) {
+  var waveforms = this.options[this.selectedIndex].text;
 
   keyboard.keyDown = function(note, frequency) {
-    var osc = context.createOscillator(),
-      osc2 = context.createOscillator();
-
+    var osc = context.createOscillator();
     osc.frequency.value = frequency;
-    osc.type = 'sawtooth';
-    osc.detune.value = -10;
-
-    osc2.frequency.value = frequency;
-    osc2.type = 'triangle';
-    osc2.detune.value = 10;
-
-    osc.connect(masterVolume);
-    osc2.connect(masterVolume);
     
-    if (effect === "No effect") {
-      masterVolume.disconnect();
-      masterVolume.connect(analyser);
+    var effectSelect = document.getElementById('effect');
+    var effectGlobal = effectSelect.options[effectSelect.selectedIndex].text;
+    
+    if (waveforms.length < 9) {
+      if (waveforms === "sine") {
+        osc.type = 'sine';
+      } else if (waveforms === "square") {
+        osc.type = 'square';
+      } else if (waveforms === "sawtooth") {
+        osc.type = 'sawtooth';
+      } else if (waveforms === "triangle") {
+        osc.type = 'triangle';
+      } else {}
+      osc.detune.value = -10;
+      osc.connect(masterVolume);
 
-    } else if (effect === "Chorus") {
-      masterVolume.disconnect();
+      if (effectGlobal === "No effect") {
+        masterVolume.disconnect();
+        masterVolume.connect(analyser);
 
-      masterVolume.connect(chorus);
-      chorus.connect(analyser);
+      } else if (effectGlobal === "Chorus") {
+        masterVolume.disconnect();
 
-    } else if (effect === "Tremolo") {
-      masterVolume.disconnect();
-      masterVolume.connect(tremolo);
-      tremolo.connect(analyser);
-      
-    } else if (effect === "Ping-pong") {
-      masterVolume.disconnect();
-      masterVolume.connect(glitch);
-      glitch.connect(analyser);
+        masterVolume.connect(chorus);
+        chorus.connect(analyser);
 
-    } else if (effect === "Phaser") {
-      masterVolume.disconnect();
-      masterVolume.connect(phaser);
-      phaser.connect(analyser);
+      } else if (effectGlobal === "Tremolo") {
+        masterVolume.disconnect();
+        masterVolume.connect(tremolo);
+        tremolo.connect(analyser);
 
-    } else { /* Nothing */ };
-    Visualize(analyser);
-	oscillators[frequency] = [osc, osc2];
+      } else if (effectGlobal === "Ping-pong") {
+        masterVolume.disconnect();
+        masterVolume.connect(glitch);
+        glitch.connect(analyser);
 
-	osc.start(context.currentTime);
-	osc2.start(context.currentTime);
+      } else if (effectGlobal === "Phaser") {
+        masterVolume.disconnect();
+        masterVolume.connect(phaser);
+        phaser.connect(analyser);
+
+      } else {};
+
+	Visualize(analyser);
+      analyser.connect(context.destination);
+      oscillators[frequency] = osc;
+      osc.start(context.currentTime);
+
+    } else {
+      var osc2 = context.createOscillator();
+      osc2.frequency.value = frequency;
+
+      if (waveforms === "sine, square") {
+        osc.type = 'sine';
+        osc2.type = 'square';
+
+      } else if (waveforms === "sine, sawtooth") {
+        osc.type = 'sine';
+        osc2.type = 'sawtooth';
+      } else if (waveforms === "sine, triangle") {
+        osc.type = 'sine';
+        osc2.type = 'triangle';
+      } else if (waveforms === "square, sawtooth") {
+        osc.type = 'square';
+        osc2.type = 'sawtooth';
+      } else if (waveforms === "square, triangle") {
+        osc.type = 'square';
+        osc2.type = 'triangle';
+
+      } else if (waveforms === "sawtooth, triangle") {
+        osc.type = 'sawtooth';
+        osc2.type = 'triangle';
+
+      } else {
+        alert("Please pick a waveform.")
+      }
+
+      osc.detune.value = -10;
+      osc2.detune.value = 10;
+
+      osc.connect(masterVolume);
+      osc2.connect(masterVolume);
+
+      if (effectGlobal === "No effect") {
+        masterVolume.disconnect();
+        masterVolume.connect(analyser);
+
+      } else if (effectGlobal === "Chorus") {
+        masterVolume.disconnect();
+
+        masterVolume.connect(chorus);
+        chorus.connect(analyser);
+
+      } else if (effectGlobal === "Tremolo") {
+        masterVolume.disconnect();
+        masterVolume.connect(tremolo);
+        tremolo.connect(analyser);
+
+      } else if (effectGlobal === "Ping-pong") {
+        masterVolume.disconnect();
+        masterVolume.connect(glitch);
+        glitch.connect(analyser);
+
+      } else if (effectGlobal === "Phaser") {
+        masterVolume.disconnect();
+        masterVolume.connect(phaser);
+        phaser.connect(analyser);
+
+      } else {};
+	Visualize(analyser);
+      analyser.connect(context.destination);
+      oscillators[frequency] = [osc, osc2];
+      osc.start(context.currentTime);
+      osc2.start(context.currentTime);
+    }
+
   };
 
-  // Code for one oscillator
-  /* keyboard.keyUp = function (note, frequency) {
+  // KeyUp functions; DO NOT CHANGE
+  if (waveforms.length < 9) {
+    keyboard.keyUp = function(note, frequency) {
       oscillators[frequency].stop(context.currentTime);
-  }; */
-
-  keyboard.keyUp = function(note, frequency) {
-    oscillators[frequency].forEach(function(oscillator) {
-      oscillator.stop(context.currentTime);
-    });
-  };
+    };
+  } else {
+    keyboard.keyUp = function(note, frequency) {
+      oscillators[frequency].forEach(function(oscillator) {
+        oscillator.stop(context.currentTime);
+      });
+    };
+  }
 
 };
+
+
+
+//--------------------------
 
 function Visualize(analyser) {
     var canvas = document.getElementById('canvas'),
