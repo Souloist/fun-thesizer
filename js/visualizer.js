@@ -1,7 +1,12 @@
+window.onload = function() {
+    new Visualizer().ini();
+};
+
 var Visualizer = function() {
     this.file = null, //the current file
     this.fileName = null, //the current file name
     this.audioContext = null,
+    this.gain = null, // controls the volume
     this.source = null, //the audio source
     this.info = document.getElementById('update_status').innerHTML, //this used to upgrade the UI information
     this.infoUpdateId = null, //to sotore the setTimeout ID and clear the interval
@@ -24,6 +29,8 @@ Visualizer.prototype = {
         window.cancelAnimationFrame = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.msCancelAnimationFrame;
         try {
             this.audioContext = new AudioContext();
+            this.gain = this.audioContext.createGain();
+            this.gain.gain.volume = 1;
         } catch (e) {
             this._updateInfo('!Your browser does not support AudioContext', false);
             console.log(e);
@@ -31,7 +38,10 @@ Visualizer.prototype = {
     },
     _addEventListner: function() {
         var that = this,
-            audioInput = document.getElementById('uploadedFile');
+            audioInput = document.getElementById('uploadedFile'),
+            // volumeSlider = document.getElementById('volume'),
+            stopButton = document.getElementById('stop');
+
         //listen the file upload
         audioInput.onchange = function() {
             //the if statement fixes the file selction cance,l because the onchange will trigger even the file selection been canceled
@@ -49,7 +59,14 @@ Visualizer.prototype = {
                 that._start();
             };
         };
-        that._start();
+        // volumeSlider.onchange = function() {
+        //     var volume = this.value,
+        //     that.gain.gain.value = Math.pow(10, volume);
+        // };
+        stopButton.onclick = function() {
+            if (that.source)
+                that.source.stop(0);
+        };
     },
     _start: function() {
         //read and decode the file into audio array buffer 
@@ -152,7 +169,7 @@ Visualizer.prototype = {
                 if (capYPositionArray.length < Math.round(meterNum)) {
                     capYPositionArray.push(value);
                 };
-                // ctx.fillStyle = capStyle;
+                ctx.fillStyle = capStyle;
                 //draw the cap, with transition effect
                 if (value < capYPositionArray[i]) {
                     ctx.fillRect(i * 15, cheight - (--capYPositionArray[i]), meterWidth, capHeight);
@@ -161,7 +178,7 @@ Visualizer.prototype = {
                     capYPositionArray[i] = value;
                 };
                 ctx.fillStyle = gradient; //set the filllStyle to gradient for a better look
-                ctx.fillRect(i * 15 /*meterWidth+gap*/ , cheight - value + capHeight, meterWidth, cheight); //the meter
+                ctx.fillRect(i * 15 , cheight - value + capHeight, meterWidth, cheight); //the meter
             }
             that.animationId = requestAnimationFrame(drawMeter);
         }
@@ -174,7 +191,7 @@ Visualizer.prototype = {
             return;
         };
         this.status = 0;
-        var text = 'Waiting to read the file';
+        var text = '';
         document.getElementById('fileWrapper').style.opacity = 1;
         document.getElementById('update_status').innerHTML = text;
         instance.info = text;
@@ -202,7 +219,3 @@ Visualizer.prototype = {
         };
     }
 }
-
-window.onload = function() {
-    new Visualizer().ini();
-};
