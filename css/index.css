@@ -68,3 +68,10 @@ input[type="file"]
     height: 25px;
 	width: 48px;
 }
+
+#names{
+	margin-right: 2cm;
+	position:absolute;
+	right:50px;
+	top:90px;
+}
