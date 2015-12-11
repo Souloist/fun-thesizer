@@ -86,6 +86,7 @@ function pickOsc(event) {
       } else if (waveforms === "triangle") {
         osc.type = 'triangle';
       } else {}
+      alert("Yay we did picked an analyser");
       osc.detune.value = -10;
       osc.connect(masterVolume);
 
