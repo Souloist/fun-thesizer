@@ -19,6 +19,20 @@
                 <button id="stop" type="button">Stop</button>
             </div>
             <div id="update_status">
+            <label>Choose waveforms : </label>
+            <select id="osc" onchange="pickOsc.call(this, event)" ;>
+                <option>---</option>
+                <option>sine</option>
+                <option>square</option>
+                <option>sawtooth</option>
+                <option>triangle</option>
+                <option>sine, square</option>
+                <option>sine, sawtooth</option>
+                <option>sine, triangle</option>
+                <option>square, sawtooth</option>
+                <option>square, triangle</option>
+                <option>sawtooth, triangle</option>
+            </select>
             <label for="effects">Select an effect:</label>
             <select id = "effects" onChange="pickEffect.call(this, event)" ;>
                 <option>No effect</option>
@@ -34,6 +48,9 @@
         </div>
         <div class="container">
             <div id="keyboard"></div>
+            <p>White keys are the '<b>A</b>' through '<b>"</b>' keys on your computer.
+                Black keys are the '<b>W</b>' through '<b>\</b>' keys on your computer (with appropriate spacing).
+            </p>
         </div>
         <script type="text/javascript" src="js/visualizer.js"></script>
         <script type="text/javascript" src="js/synth.js"></script>
