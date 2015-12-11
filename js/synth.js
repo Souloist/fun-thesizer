@@ -21,7 +21,8 @@ var keyboard = new QwertyHancock({
 });
 
 var context = new AudioContext(),
-    masterVolume = context.createGain(),
+    masterVolume = context.createGain(), 
+    analyser = context.createAnalyser(),
     tuna = new Tuna(context),
     oscillators = {};
 
