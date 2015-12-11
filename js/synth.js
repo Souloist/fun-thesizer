@@ -17,8 +17,8 @@ var keyboard = new QwertyHancock({
      id: 'keyboard',
      width: 600,
      height: 150,
-     startNote: 'C4'
-     octaves: 3
+     // startNote: 'C4'
+     octaves: 2
 });
 
 var context = new AudioContext(),
