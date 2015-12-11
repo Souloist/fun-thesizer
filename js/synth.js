@@ -21,8 +21,7 @@ var keyboard = new QwertyHancock({
 });
 
 var context = new AudioContext(),
-    masterVolume = context.createGain(), 
-    analyser = context.createAnalyser(),
+    masterVolume = context.createGain(),
     tuna = new Tuna(context),
     oscillators = {};
 
@@ -86,39 +85,37 @@ function pickOsc(event) {
       } else if (waveforms === "triangle") {
         osc.type = 'triangle';
       } else {}
-      alert("Yay we did picked an analyser");
       osc.detune.value = -10;
       osc.connect(masterVolume);
 
       if (effectGlobal === "No effect") {
         masterVolume.disconnect();
-        masterVolume.connect(analyser);
+        masterVolume.connect(context.destination);
 
       } else if (effectGlobal === "Chorus") {
         masterVolume.disconnect();
 
         masterVolume.connect(chorus);
-        chorus.connect(analyser);
+        chorus.connect(context.destination);
 
       } else if (effectGlobal === "Tremolo") {
         masterVolume.disconnect();
         masterVolume.connect(tremolo);
-        tremolo.connect(analyser);
+        tremolo.connect(context.destination);
 
       } else if (effectGlobal === "Ping-pong") {
         masterVolume.disconnect();
         masterVolume.connect(glitch);
-        glitch.connect(analyser);
+        glitch.connect(context.destination);
 
       } else if (effectGlobal === "Phaser") {
         masterVolume.disconnect();
         masterVolume.connect(phaser);
-        phaser.connect(analyser);
+        phaser.connect(context.destination);
 
       } else {};
 
-	Visualize(analyser);
-      analyser.connect(context.destination);
+      masterVolume.connect(context.destination);
       oscillators[frequency] = osc;
       osc.start(context.currentTime);
 
@@ -159,32 +156,32 @@ function pickOsc(event) {
 
       if (effectGlobal === "No effect") {
         masterVolume.disconnect();
-        masterVolume.connect(analyser);
+        masterVolume.connect(context.destination);
 
       } else if (effectGlobal === "Chorus") {
         masterVolume.disconnect();
 
         masterVolume.connect(chorus);
-        chorus.connect(analyser);
+        chorus.connect(context.destination);
 
       } else if (effectGlobal === "Tremolo") {
         masterVolume.disconnect();
         masterVolume.connect(tremolo);
-        tremolo.connect(analyser);
+        tremolo.connect(context.destination);
 
       } else if (effectGlobal === "Ping-pong") {
         masterVolume.disconnect();
         masterVolume.connect(glitch);
-        glitch.connect(analyser);
+        glitch.connect(context.destination);
 
       } else if (effectGlobal === "Phaser") {
         masterVolume.disconnect();
         masterVolume.connect(phaser);
-        phaser.connect(analyser);
+        phaser.connect(context.destination);
 
       } else {};
-	Visualize(analyser);
-      analyser.connect(context.destination);
+
+      masterVolume.connect(context.destination);
       oscillators[frequency] = [osc, osc2];
       osc.start(context.currentTime);
       osc2.start(context.currentTime);
