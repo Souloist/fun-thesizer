@@ -23,6 +23,7 @@ var keyboard = new QwertyHancock({
 var context = new AudioContext(),
     masterVolume = context.createGain(),
     tuna = new Tuna(context),
+    analyser = context.createAnalyser(),
     oscillators = {};
 
 
@@ -90,38 +91,45 @@ function pickOsc(event) {
 
       if (effectGlobal === "No effect") {
         masterVolume.disconnect();
-        masterVolume.connect(context.destination);
+        
+        masterVolume.connect(analyser);
 
       } else if (effectGlobal === "Chorus") {
         masterVolume.disconnect();
 
         masterVolume.connect(chorus);
-        chorus.connect(context.destination);
+        chorus.connect(analyser);
 
       } else if (effectGlobal === "Tremolo") {
         masterVolume.disconnect();
+        
         masterVolume.connect(tremolo);
-        tremolo.connect(context.destination);
+        tremolo.connect(analyser);
 
       } else if (effectGlobal === "Ping-pong") {
         masterVolume.disconnect();
+        
         masterVolume.connect(glitch);
-        glitch.connect(context.destination);
+        glitch.connect(analyser);
 
       } else if (effectGlobal === "Phaser") {
         masterVolume.disconnect();
+        
         masterVolume.connect(phaser);
-        phaser.connect(context.destination);
+        phaser.connect(analyser);
 
       } else {};
 
-      masterVolume.connect(context.destination);
+      analyser.connect(context.destination);
+      
       oscillators[frequency] = osc;
       osc.start(context.currentTime);
+      
+      Visualize(analyser);
 
     } else {
       var osc2 = context.createOscillator();
-      osc2.frequency.value = frequency;
+          osc2.frequency.value = frequency;
 
       if (waveforms === "sine, square") {
         osc.type = 'sine';
@@ -139,7 +147,6 @@ function pickOsc(event) {
       } else if (waveforms === "square, triangle") {
         osc.type = 'square';
         osc2.type = 'triangle';
-
       } else if (waveforms === "sawtooth, triangle") {
         osc.type = 'sawtooth';
         osc2.type = 'triangle';
@@ -156,35 +163,41 @@ function pickOsc(event) {
 
       if (effectGlobal === "No effect") {
         masterVolume.disconnect();
-        masterVolume.connect(context.destination);
+        masterVolume.connect(analyser);
 
       } else if (effectGlobal === "Chorus") {
         masterVolume.disconnect();
 
         masterVolume.connect(chorus);
-        chorus.connect(context.destination);
+        chorus.connect(analyser);
 
       } else if (effectGlobal === "Tremolo") {
         masterVolume.disconnect();
+        
         masterVolume.connect(tremolo);
-        tremolo.connect(context.destination);
+        tremolo.connect(analyser);
 
       } else if (effectGlobal === "Ping-pong") {
         masterVolume.disconnect();
+        
         masterVolume.connect(glitch);
-        glitch.connect(context.destination);
+        glitch.connect(analyser);
 
       } else if (effectGlobal === "Phaser") {
         masterVolume.disconnect();
+        
         masterVolume.connect(phaser);
-        phaser.connect(context.destination);
+        phaser.connect(analyser);
 
       } else {};
 
-      masterVolume.connect(context.destination);
+      analyser.connect(context.destination);
+      
       oscillators[frequency] = [osc, osc2];
       osc.start(context.currentTime);
       osc2.start(context.currentTime);
+      
+      Visualize(analyser);
     }
 
   };
