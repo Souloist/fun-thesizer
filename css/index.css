@@ -10,6 +10,10 @@ body {
     background-size: 100%, 100%;
     color: #FEFEFE;
 }
+
+h1 {
+	font-size: 20;
+}
 #fileWrapper{
 	transition:all 0.5s ease;
 	position: absolute;
