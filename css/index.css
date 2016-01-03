@@ -51,7 +51,9 @@ input[type="file"]{
 	text-align: center;
     line-height: 1.42857143;	
 	font-size: 18px;
-	padding: 0.05px; 
+	color: #00C5CD; /* god i love this color */
+    background-color: rgba(0, 0, 0, 0.55);
+    margin: 25px;	
 }
 
 .text{
@@ -82,7 +84,20 @@ footer{
     margin-left: 0.5cm;
 }
 
-a:link    {color:green; background-color:transparent; text-decoration:none}
-a:visited {color:pink; background-color:transparent; text-decoration:none}
-a:hover   {color:red; background-color:transparent; text-decoration:underline}
-a:active  {color:yellow; background-color:transparent; text-decoration:underline}
+a:link{
+	color:green; 
+	background-color:transparent; 
+	text-decoration:none;
+}
+
+a:visited {
+	color:white; 
+	background-color:transparent; 
+	text-decoration:none;
+}
+
+a:hover{
+	color:#00C5CD;
+	background-color:transparent; 
+	text-decoration:underline;
+}

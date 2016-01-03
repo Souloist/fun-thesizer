@@ -12,15 +12,19 @@
         <header id = "info">
             Fun-thesizer
         </header>
+        
         <div id="wrapper">
+
+            <!-- Play Mp3 -->
             <div id="fileWrapper" class="file_wrapper">
                 <label for="uploadedFile">Select an MP3 file to play:</label>
                 <input type="file" id="uploadedFile"></input>
                 <button id="stop" type="button">Stop</button>
             </div>
 
+            <!-- Waveform and effect selection -->
             <div id="update_status">
-                <b>Let's make some music!</b>
+                <p>Let's make some <i><font color="#00C5CD">music</font></i>!<p>
                 <br><label>Choose waveforms: </label>
                 <select id="osc" onchange="pickOsc.call(this, event)" ;>
                 <option>---</option>
@@ -45,25 +49,26 @@
                 </select>
             </div>
             
-            <!-- Visualization happens below -->
+            <!-- Audio Visualization -->
             <div id="visualizer_wrapper">
-            <canvas id='canvas' width="1200" height="400"></canvas>
+                <canvas id='canvas' width="1200" height="400"></canvas>
             </div>
             
-            <!-- Keyboard is below -->
+            <!-- Keyboard-->
             <br></br>
             <div class="container">
-            <div id="keyboard"></div>
+                <div id="keyboard"></div>
             </div>
 
             <!-- Tips on how to use the keyboard -->
-            <div id="helper">
-                <p>White keys are the '<b>A</b>' through '<b>"</b>' keys on your computer. Black keys are the '<b>W</b>' through '<b>\</b>' keys on your computer (with appropriate spacing).</p>
+            <div>
+                <p id="helper">Tip: White keys are the '<b>A</b>' through '<b>"</b>' keys on your computer. Black keys are the '<b>W</b>' through '<b>\</b>' keys on your computer (with appropriate spacing).</p>
             </div>
+
         <script type="text/javascript" src="js/qwerty-hancock.min.js"></script>
         <script type="text/javascript" src="js/visualizer.js"></script>
         <script type="text/javascript" src="js/synth.js"></script>
         <script type="text/javascript" src="js/tuna-min.js"></script>
     </body>
-    <footer> Made with sweat and tears by <a href="https://github.com/Souloist">Richard Shen</a> and Danni Tang.</footer>
+    <footer> Made with sweat and tears by <a href="https://github.com/Souloist">Richard Shen</a> and <a href="https://github.com/tangdnn">Danni Tang</a>.</footer>
 </html>
