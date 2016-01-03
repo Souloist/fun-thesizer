@@ -12,53 +12,58 @@
         <header id = "info">
             Fun-thesizer
         </header>
-        <div id="names"> Made with coffee by Richard Shen and Danni Tang </div>
         <div id="wrapper">
             <div id="fileWrapper" class="file_wrapper">
                 <label for="uploadedFile">Select an MP3 file to play:</label>
                 <input type="file" id="uploadedFile"></input>
                 <button id="stop" type="button">Stop</button>
             </div>
+
             <div id="update_status">
-                
-                
-            <b>Let's make some music!</b>
-            <br><label>Choose waveforms: </label>
-            <select id="osc" onchange="pickOsc.call(this, event)" ;>
-            <option>---</option>
-            <option>sine</option>
-            <option>square</option>
-            <option>sawtooth</option>
-            <option>triangle</option>
-            <option>sine, square</option>
-            <option>sine, sawtooth</option>
-            <option>sine, triangle</option>
-            <option>square, sawtooth</option>
-            <option>square, triangle</option>
-            <option>sawtooth, triangle</option>
-            </select>
-            <br><label>Choose an effect: </label>
-            <select id = "effect">
-            <option>No effect</option>
-            <option>Chorus</option>
-            <option>Tremolo</option>
-            <option>Ping-pong</option>
-            <option>Phaser</option>
-            </select>
+                <b>Let's make some music!</b>
+                <br><label>Choose waveforms: </label>
+                <select id="osc" onchange="pickOsc.call(this, event)" ;>
+                <option>---</option>
+                <option>sine</option>
+                <option>square</option>
+                <option>sawtooth</option>
+                <option>triangle</option>
+                <option>sine, square</option>
+                <option>sine, sawtooth</option>
+                <option>sine, triangle</option>
+                <option>square, sawtooth</option>
+                <option>square, triangle</option>
+                <option>sawtooth, triangle</option>
+                </select>
+                <br><label>Choose an effect: </label>
+                <select id = "effect">
+                <option>No effect</option>
+                <option>Chorus</option>
+                <option>Tremolo</option>
+                <option>Ping-pong</option>
+                <option>Phaser</option>
+                </select>
             </div>
             
+            <!-- Visualization happens below -->
             <div id="visualizer_wrapper">
             <canvas id='canvas' width="1200" height="400"></canvas>
             </div>
             
+            <!-- Keyboard is below -->
+            <br></br>
             <div class="container">
             <div id="keyboard"></div>
             </div>
-            <center><p>White keys are the '<b>A</b>' through '<b>"</b>' keys on your computer. Black keys are the '<b>W</b>' through '<b>\</b>' keys on your computer (with appropriate spacing).</p>
-            
+
+            <!-- Tips on how to use the keyboard -->
+            <div id="helper">
+                <p>White keys are the '<b>A</b>' through '<b>"</b>' keys on your computer. Black keys are the '<b>W</b>' through '<b>\</b>' keys on your computer (with appropriate spacing).</p>
+            </div>
         <script type="text/javascript" src="js/qwerty-hancock.min.js"></script>
         <script type="text/javascript" src="js/visualizer.js"></script>
         <script type="text/javascript" src="js/synth.js"></script>
         <script type="text/javascript" src="js/tuna-min.js"></script>
     </body>
+    <footer> Made with sweat and tears by <a href="https://github.com/Souloist">Richard Shen</a> and Danni Tang.</footer>
 </html>
