@@ -33,13 +33,11 @@ body {
 	margin-left: 2cm;	
 }
 
-input[type="file"]
-{
+input[type="file"]{
 	background: #000080;
 }
 
-#info
-{
+#info{
 	text-align: center;
 	position: relative;
 	margin-left: auto;
@@ -47,6 +45,15 @@ input[type="file"]
 	font-size: 50px;
     background-color: rgba(255, 255, 255, 0.15);
     line-height: 1.42857143;
+}
+
+#helper{
+	text-align: center;
+    line-height: 1.42857143;	
+	font-size: 18px;
+	color: #00C5CD; /* god i love this color */
+    background-color: rgba(0, 0, 0, 0.55);
+    margin: 25px;	
 }
 
 .text{
@@ -69,9 +76,28 @@ input[type="file"]
 	width: 48px;
 }
 
-#names{
-	margin-right: 2cm;
-	position:absolute;
-	right:20px;
-	top:90px;
+footer{
+	position: fixed;
+	bottom: 2px;
+	padding: 0.05px;
+    line-height: 1.42857143;
+    margin-left: 0.5cm;
+}
+
+a:link{
+	color:green; 
+	background-color:transparent; 
+	text-decoration:none;
+}
+
+a:visited {
+	color:white; 
+	background-color:transparent; 
+	text-decoration:none;
+}
+
+a:hover{
+	color:#00C5CD;
+	background-color:transparent; 
+	text-decoration:underline;
 }

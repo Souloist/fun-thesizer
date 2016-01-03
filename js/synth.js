@@ -13,6 +13,7 @@
 //--------------------------
 // synth.js starts here
 
+// Create keyboard
 var keyboard = new QwertyHancock({
      id: 'keyboard',
      width: 600,
@@ -21,6 +22,7 @@ var keyboard = new QwertyHancock({
      octaves: 2
 });
 
+// Create audio nodes
 var context = new AudioContext(),
     masterVolume = context.createGain(),
     tuna = new Tuna(context),
